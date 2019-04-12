@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './login.scss';
+import {LoginService} from './login.service';
+var loginService;
 
 export class Login extends Component {
   constructor(props) {
@@ -7,6 +9,7 @@ export class Login extends Component {
     this.state = {
       email: ''
     }
+    loginService = new LoginService();
   }
 
   emailChange(event) {
@@ -16,18 +19,30 @@ export class Login extends Component {
   passwordChange(event) {
     this.setState({password: event.target.value});
   }
-  handleSubmit(event) {
-    console.log('An email was submitted: ' + this.state.email);
-    return fetch(`localhost:8080/api`, {
-      method: 'GET',
+
+  async handleSubmit(event) {
+    console.log('An email is being submitted: ' + this.state.email);
+    console.log('An email is being submitted: ' + event);
+
+    const t = fetch(`http://localhost:8080/api/login`, {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        Authorization: token
-      }
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
     })
-    event.preventDefault();
+      .then(response => response.json())
+      .then(data => {
+        loginService.setToken(data.data);
+        console.log('data: ', data)
+      });
   }
+
+
 
   render() {
     return (

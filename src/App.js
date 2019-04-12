@@ -33,7 +33,7 @@ class App extends Component {
 
   render() {
     if (this.state.checkingLogin) {
-      return <div style={{'font-size': '3em'}}>
+      return <div style={{'fontSize': '3em'}}>
         <FontAwesomeIcon icon="spinner" />
       </div>;
     }

@@ -25,6 +25,10 @@ export class LoginService {
       });
     }
 
+    setToken(token) {
+      return localStorage.idb.set(TOKEN, token);
+    }
+
     isLoggedIn() {
         return localStorage.idb.get(TOKEN).then(token => {
           return !!token;
