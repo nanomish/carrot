@@ -1,7 +1,7 @@
 import {openDb, deleteDb} from 'idb';
 
 let instance = null;
-const KEYVAL = 'carrot-keyval';
+const DBNAME = 'carrot-keyval';
 
 export class LocalStorageService {
 
@@ -13,7 +13,7 @@ export class LocalStorageService {
     instance = this;
 
     instance.dbPromise = openDb('keyval-store', 1, upgradeDB => {
-      upgradeDB.createObjectStore(KEYVAL);
+      upgradeDB.createObjectStore(DBNAME);
     });
 
     this.init();
@@ -23,29 +23,30 @@ export class LocalStorageService {
     instance.idb = {
       async get(key) {
         const db = await instance.dbPromise;
-        return db.transaction(KEYVAL).objectStore(KEYVAL).get(key);
+        const result = db.transaction(DBNAME).objectStore(DBNAME).get(key);
+        return result;
       },
       async set(key, val) {
         const db = await instance.dbPromise;
-        const tx = db.transaction(KEYVAL, 'readwrite');
-        tx.objectStore(KEYVAL).put(val, key);
+        const tx = db.transaction(DBNAME, 'readwrite');
+        tx.objectStore(DBNAME).put(val, key);
         return tx.complete;
       },
       async delete(key) {
         const db = await instance.dbPromise;
-        const tx = db.transaction(KEYVAL, 'readwrite');
-        tx.objectStore(KEYVAL).delete(key);
+        const tx = db.transaction(DBNAME, 'readwrite');
+        tx.objectStore(DBNAME).delete(key);
         return tx.complete;
       },
       async clear() {
         const db = await instance.dbPromise;
-        const tx = db.transaction(KEYVAL, 'readwrite');
-        tx.objectStore(KEYVAL).clear();
+        const tx = db.transaction(DBNAME, 'readwrite');
+        tx.objectStore(DBNAME).clear();
         return tx.complete;
       },
       async keys() {
         const db = await instance.dbPromise;
-        return db.transaction(KEYVAL).objectStore(KEYVAL).getAllKeys();
+        return db.transaction(DBNAME).objectStore(DBNAME).getAllKeys();
       },
     };
   }

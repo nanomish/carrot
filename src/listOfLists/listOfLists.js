@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import './login.scss';
-import {LoginService} from './login.service';
+import './listOfLists.scss';
 import {APIService} from '../services/apiService';
 import App from "../App";
-var loginService;
 var apiService;
 
-export class Login extends Component {
+export class ListOfLists extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: ''
     };
-    loginService = new LoginService();
     apiService = new APIService();
   }
 
@@ -32,14 +29,13 @@ export class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
-    loginService.login(postObj)
+      apiService.executePOSTRequest('login', null, postObj)
       .then(data => {
         if (!data || !data.data) {
           this.setState({loginError: 'Error logging in'});
           console.error('error login: ', data);
           this.setState({redirectToMainPage: false});
         } else {
-          loginService.setToken(data.data);
           console.log('data: ', data)
           this.setState({loginError: ''});
           this.setState({token: data.data});

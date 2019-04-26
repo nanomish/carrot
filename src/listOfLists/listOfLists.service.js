@@ -3,10 +3,10 @@
  */
 import {LocalStorageService} from '../localStorage/localStorage.service';
 import {APIService} from '../services/apiService';
+
 let instance = null;
 const TOKEN = 'token';
 var localStorage;
-var apiService;
 
 export class LoginService {
 
@@ -18,7 +18,6 @@ export class LoginService {
         this.state = "duke";
         this.instance = this;
 
-        apiService = new APIService();
         localStorage = new LocalStorageService();
         localStorage.idb.set('key', 'value99');
 
@@ -27,18 +26,7 @@ export class LoginService {
       });
     }
 
-    setToken(token) {
-      return localStorage.idb.set(TOKEN, token);
-    }
-
-    isLoggedIn() {
-        return localStorage.idb.get(TOKEN).then(token => {
-          console.log('isLoggedIn, token: ', token);
-          return !!token;
-        });
-    }
-
-    login(obj) {
-      return apiService.executePOSTRequest('login', null, obj);
+    getListOfLists() {
+      APIService.executeGETRequest();
     }
 }

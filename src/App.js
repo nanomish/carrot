@@ -10,7 +10,6 @@ import {faIgloo,faSpinner} from '@fortawesome/free-solid-svg-icons'
 library.add(faIgloo)
 library.add(faSpinner)
 
-
 var loginService;
 
 class App extends Component {
@@ -21,9 +20,10 @@ class App extends Component {
       checkingLogin: true
     }
   }
+
   componentWillMount() {
     loginService = new LoginService();
-    console.log('is loged in', loginService.isLoggedIn());
+    console.log('is logged in', loginService.isLoggedIn());
     console.log('ls: ', loginService);
     loginService.isLoggedIn().then(isLoggedIn => {
       this.setState({isLoggedIn});
@@ -33,7 +33,7 @@ class App extends Component {
 
   render() {
     if (this.state.checkingLogin) {
-      return <div style={{'fontSize': '3em'}}>
+      return <div style={{'fontSize': '3em', position: 'absolute', left: '45%', top: '1em'}}>
         <FontAwesomeIcon icon="spinner" />
       </div>;
     }
