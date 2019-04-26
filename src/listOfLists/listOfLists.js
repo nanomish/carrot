@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './listOfLists.scss';
 import {APIService} from '../services/apiService';
 import App from "../App";
@@ -29,7 +29,7 @@ export class ListOfLists extends Component {
       email: this.state.email,
       password: this.state.password
     };
-      apiService.executePOSTRequest('login', null, postObj)
+    apiService.executeRequest('login', null, postObj)
       .then(data => {
         if (!data || !data.data) {
           this.setState({loginError: 'Error logging in'});
@@ -47,10 +47,10 @@ export class ListOfLists extends Component {
         this.setState({
           token: '',
           redirectToMainPage: true,
-          loginError: error.message});
+          loginError: error.message
+        });
       });
   }
-
 
 
   render() {
@@ -62,7 +62,7 @@ export class ListOfLists extends Component {
         <div style={{margin: 1 + 'em'}}>
           <input className="input-component"
                  placeholder="email"
-                 onChange={this.emailChange.bind(this)} />
+                 onChange={this.emailChange.bind(this)}/>
         </div>
         <div style={{margin: 1 + 'em'}}>
           <input className="input-component"
@@ -70,7 +70,7 @@ export class ListOfLists extends Component {
                  type="password"
                  onChange={this.passwordChange.bind(this)}/>
         </div>
-        <input type="submit" value="Submit" onClick={this.handleSubmit.bind(this)} />
+        <input type="submit" value="Submit" onClick={this.handleSubmit.bind(this)}/>
         {this.state.password}
         <div>{this.state.token}</div>
         {this.state.loginError && <div>{this.state.loginError}</div>}
