@@ -16,6 +16,8 @@ export class APIService {
   }
 
   executePOSTRequest(endPoint, paramsObj, postObj, options) {
+    console.log('executePOSTRequest, paramsObj: ', paramsObj);
+    console.log('executePOSTRequest, postObj: ', postObj);
     let queryString = this.createQueryString(paramsObj);
     return fetch(`http://${this.getApiServer()}/api/${endPoint}${queryString}`, {
       method: 'POST',

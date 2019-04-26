@@ -39,10 +39,12 @@ export class Login extends Component {
           console.error('error login: ', data);
           this.setState({redirectToMainPage: false});
         } else {
-          loginService.setToken(data.data);
+          const {token, email} = data.data;
+          loginService.setLoginData(token, email);
+
           console.log('data: ', data)
           this.setState({loginError: ''});
-          this.setState({token: data.data});
+          this.setState({token: data.data.token});
           this.setState({redirectToMainPage: true});
         }
       })
